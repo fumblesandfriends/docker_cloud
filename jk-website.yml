@@ -1,0 +1,28 @@
+lb:
+  image: dockercloud/haproxy
+  links:
+    - web
+  ports:
+    - "80:80"
+  roles:
+    - global
+  environment:
+    - BALANCE=source
+web:
+  image: fumblesandfriends/node
+  target_num_containers: 2
+  autoredeploy: true
+  restart: always
+  environment:
+    - NODE_ENV=production
+    - VIRTUAL_HOST="*.jonathankolb.com"
+    - VIRTUAL_HOST_WEIGHT=0
+blog:
+  image: ghost
+  restart: always
+  volumes:
+    - /var/data/blog:/var/lib/ghost
+  environment:
+    - NODE_ENV=production
+    - VIRTUAL_HOST="blog.jonathankolb.com"
+    - VIRTUAL_HOST_WEIGHT=1
