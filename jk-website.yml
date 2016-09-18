@@ -2,6 +2,7 @@ lb:
   image: dockercloud/haproxy
   links:
     - web
+    - blog
   ports:
     - "80:80"
   roles:
@@ -9,7 +10,7 @@ lb:
   environment:
     - BALANCE=source
 web:
-  image: fumblesandfriends/node
+  image: fumblesandfriends/personal_website
   target_num_containers: 2
   autoredeploy: true
   restart: always
